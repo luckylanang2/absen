@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Absensi Karyawan</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 30px;
+      background: #f4f4f4;
+    }
+    h2 {
+      margin-bottom: 20px;
+    }
+    button {
+      background-color: #2b7a78;
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      margin: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 8px;
+    }
+    button:hover {
+      background-color: #205e5d;
+    }
+  </style>
+</head>
+<body>
+  <h2>Form Absensi Karyawan</h2>
+  <p>Lokasi akan otomatis terdeteksi saat klik tombol</p>
+  <button onclick="openForm('hadir')">Absensi Kehadiran</button>
+  <button onclick="openForm('pulang')">Absensi Pulang</button>
+
+  <script>
+    function openForm(mode) {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          const lat = position.coords.latitude;
+          const lon = position.coords.longitude;
+          const lokasi = `https://www.google.com/maps?q=${lat},${lon}`;
+
+          // Ganti URL sesuai kebutuhan (bisa pakai dua form jika ingin pisah)
+          const formURL = "https://docs.google.com/forms/d/e/1FAIpQLSfVux8uNhA-5-uHof2J4Vk8LGttwKomJ612-Ltd47iRZU7wCQ/viewform?usp=pp_url&entry.1515299658=" + encodeURIComponent(lokasi);
+
+          window.open(formURL, "_blank");
+        }, function(error) {
+          alert("Gagal mendapatkan lokasi. Pastikan izin lokasi diaktifkan.");
+        });
+      } else {
+        alert("Browser tidak mendukung fitur lokasi.");
+      }
+    }
+  </script>
+</body>
+</html>
